@@ -3,18 +3,8 @@
 
 #include <string>
 #include <vector>
+#include "Employee.h"
 using namespace std;
-
-struct Employee {
-    string id;
-    string name;
-    string type;
-    double baseSalary;
-    int absenceDays;
-    int lateCount;
-    double bonus;
-    bool resigned;
-};
 
 class Read {
 private:
