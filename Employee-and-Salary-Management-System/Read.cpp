@@ -1,76 +1,116 @@
 #include "Read.h"
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 using namespace std;
 
-Read::Read(const string& filename) : filename(filename) {}
+Read::Read(const string& filename) :filename(filename) {}
 
 void Read::loadData() {
     ifstream file(filename);
-    string line;
-    while (getline(file, line)) {
-        stringstream ss(line);
-        Employee emp;
-        string temp;
+	if (!file.is_open()) {
+		cerr << "Failed to open file: " << filename << endl;
+		return;
+	}
 
-        getline(ss, emp.id, ',');
-        getline(ss, emp.name, ',');
-        getline(ss, emp.type, ',');
-        getline(ss, temp, ','); emp.baseSalary = stod(temp); // 將字串轉成 double
-        getline(ss, temp, ','); emp.absenceDays = stoi(temp); // 將字串轉成 int
-        getline(ss, temp, ','); emp.bonus = stod(temp);
+	// === 處理 UTF-8 BOM 亂碼關鍵程式碼 ===
+	unsigned char bom[3] = { 0 };
+	file.read((char*)bom, 3);
+	if (bom[0] == 0xEF && bom[1] == 0xBB && bom[2] == 0xBF) {
+		// 如果前三個位元組是 BOM，指標留在這裡（已經跳過 3 位元組）
+	}
+	else {
+		// 如果不是 BOM，把檔案指標移回最開頭
+		file.clear();
+		file.seekg(0, ios::beg);
+	}
 
-        emp.lateCount = 0;
-        emp.resigned = false;
-        employees.push_back(emp);
-    }
+	string line;
+	size_t lineNo = 0;
+	while (getline(file, line)) {
+		++lineNo;
+		stringstream ss(line);
+		Employee emp;
+		string id, name, type, attend, baseSalary;
+
+		getline(ss, id, ',');  emp.setID(id);
+		getline(ss, name, ',');  emp.setName(name);
+		getline(ss, type, ',');  emp.setType(type);
+
+		// read and parse baseSalary safely
+		if (getline(ss, baseSalary, ',')) {
+			// trim whitespace
+			auto first = baseSalary.find_first_not_of(" \t\r\n");
+			if (first == string::npos) {
+				emp.setBaseSalary(0.0);
+			} else {
+				auto last = baseSalary.find_last_not_of(" \t\r\n");
+				string trimmed = baseSalary.substr(first, last - first + 1);
+				try {
+					emp.setBaseSalary(stod(trimmed));
+				} catch (const invalid_argument&) {
+					cerr << "Warning: invalid baseSalary on line " << lineNo << ": '" << trimmed << "'. Using 0." << endl;
+					emp.setBaseSalary(0.0);
+				} catch (const out_of_range&) {
+					cerr << "Warning: baseSalary out of range on line " << lineNo << ": '" << trimmed << "'. Using 0." << endl;
+					emp.setBaseSalary(0.0);
+				}
+			}
+		} else {
+			emp.setBaseSalary(0.0);
+		}
+
+		// read and parse attendance (format expected: personal/sick/late)
+		if (getline(ss, attend, ',')) {
+			if (!attend.empty()) {
+				replace(attend.begin(), attend.end(), '/', ' ');
+				stringstream as(attend);
+				int p = 0, s = 0, l = 0;
+				as >> p >> s >> l;
+				emp.setAttendance(p, s, l);
+			}
+		}
+
+		employees.push_back(emp);
+	}
 }
 
 void Read::printReport() {
-    cout << endl <<"=== 員工薪資報表 ===" << endl;
-    cout << "ID\t姓名\t類型\t基本薪資\t缺勤\t遲到\t獎金\t應發薪資\t狀態" <<endl;
-    for (auto& emp : employees) {
-        if (emp.resigned) {
-            cout << emp.id << "\t" << emp.name << "\t" << emp.type
-                 << "\t" << emp.baseSalary << "\t" << emp.absenceDays
-                 << "\t" << emp.lateCount << "\t" << emp.bonus
-                 << "\t已辭職"<< endl;
-        }
-        else {
-            double salary = emp.baseSalary;
-            salary -= emp.absenceDays * 1000;
-            salary -= emp.lateCount * 200;
-            if (emp.type == "full") salary += emp.bonus;
-
-            cout << emp.id << "\t" << emp.name << "\t" << emp.type
-                 << "\t" << emp.baseSalary << "\t" << emp.absenceDays
-                 << "\t" << emp.lateCount << "\t" << emp.bonus
-                 << "\t" << salary << "\t在職"<< endl;
-        }
-    }
+	cout << "===================================== EMPLOYEE REPORT =====================================" << endl;
+	cout << left << setw(8) << "ID"
+		<< setw(16) << "NAME"
+		<< setw(8) << "TYPE"
+		<< setw(12) << "BASESALARY"
+		<< setw(32) << "ATTENDANCE(PERSON/SICK/LATE)"
+		<< setw(8) << "BONUS"
+		<< "STATUS" << endl;
+	for (Employee& emp : employees) {
+		cout << left << setw(8) << emp.getID()
+			<< setw(16) << emp.getName()
+			<< setw(8) << emp.getType()
+			<< setw(12) << emp.getBaseSalary()
+			<< setw(32) << emp.getAttendance().print()
+			<< setw(8) << emp.getBonus() << endl;
+	}
+	cout << "===========================================================================================" << endl;
 }
-// 儲存資料到Excel
+
 void Read::saveData() {
-    ofstream file(filename); // 覆蓋原本的檔案
-    for (auto& emp : employees) {
-        file << emp.id << ","
-             << emp.name << ","
-             << emp.type << ","
-             << emp.baseSalary << ","
-             << emp.absenceDays << ","
-             << emp.lateCount << ","  
-             << emp.bonus << ",";
-            if (emp.resigned) {
-                file << "resigned"<< endl;
-            }
-            else {
-                file << "active"<< endl;
-            }
-    }
+	ofstream file(filename);
+	for (Employee& emp : employees) {
+		file << emp.getID()
+			 << "," << emp.getName()
+			 << "," << emp.getType() 
+			 << "," << emp.getBaseSalary()
+			 << "," << emp.getAttendance().getPersonalLeave() << "/"
+			 << emp.getAttendance().getSickLeave() << "/"
+			 << emp.getAttendance().getLateHour()
+			 << "," << emp.getBonus() << endl;
+	}
 }
-
 
 vector<Employee>& Read::getEmployees() {
-    return employees;
+	return employees;
 }
