@@ -78,23 +78,18 @@ void Read::loadData() {
 }
 
 void Read::printReport() {
-	cout << "===================================== EMPLOYEE REPORT =====================================" << endl;
+	cout << "================================ EMPLOYEE REPORT ================================" << endl;
 	cout << left << setw(8) << "ID"
 		<< setw(16) << "NAME"
 		<< setw(8) << "TYPE"
 		<< setw(12) << "BASESALARY"
 		<< setw(32) << "ATTENDANCE(PERSON/SICK/LATE)"
 		<< setw(8) << "BONUS"
-		<< "STATUS" << endl;
+		<< endl;
 	for (Employee& emp : employees) {
-		cout << left << setw(8) << emp.getID()
-			<< setw(16) << emp.getName()
-			<< setw(8) << emp.getType()
-			<< setw(12) << emp.getBaseSalary()
-			<< setw(32) << emp.getAttendance().print()
-			<< setw(8) << emp.getBonus() << endl;
+		emp.print();
 	}
-	cout << "===========================================================================================" << endl;
+	cout << "=================================================================================" << endl;
 }
 
 void Read::saveData() {
