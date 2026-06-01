@@ -4,7 +4,9 @@
 #include "Employee.h"
 class Change {
 public:
-	void promote(Employee& emp);
+	void modifyEmployee(Employee&);
+	void addEmployee();
+	void delEmployee();
 };
 
 #endif
