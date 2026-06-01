@@ -17,6 +17,7 @@ public:
     void printReport();
     void saveData();
     vector<Employee>& getEmployees();
+    vector<Employee> copyEmployees;
 };
 
 #endif
