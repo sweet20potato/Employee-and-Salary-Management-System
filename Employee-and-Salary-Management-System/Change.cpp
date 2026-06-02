@@ -55,6 +55,52 @@ void Change::addEmployee() {
 
 }
 
-void Change::delEmployee() {
+void Change::delEmployee(vector<Employee>& employees) {
+	cout <<"Enter employee name:";
+	string delName;
+	getline(cin,delName);
 
+	int count = 0;
+
+	for(int i=0;i<employees.size();i++){
+		if(employees[i].getName()==delName){
+			count++;
+		}
+	}
+	if(count==0){
+		cout<<"Employee not found."<<endl;
+		return;
+	}
+	if(count==1){
+		for(int i=0;i<employees.size();i++){
+			if(employees[i].getName()==delName){
+				employees.erase(employees.begin()+i);
+				cout<<"Employee deleted successfully"<<endl;
+				return;
+			}
+		}
+	}
+	cout<<"Multiple employees with the same name found."<<endl;
+	cout<<"Please enter employee ID."<<endl;
+
+	for(int i=0;i<employees.size();i++){
+		if(employees[i].getName()==delName){
+			cout<<"ID:"<<employees[i].getID()<<"Name:"<<employees[i].getName()<<endl;
+		
+
+		}
+	}
+	string delID;
+	cout<<"Enter ID:";
+	cin>>delID;
+	cin.ignore();
+
+	for(int i=0;i<employees.size();i++){
+		if(employees[i].getID()==delID){
+			employees.erase(employees.begin()+i);
+			cout<<"Employee deleted successfully."<<endl;
+			return;
+		}
+	}
+	cout<<"ID not found."<<endl;
 }
