@@ -76,8 +76,9 @@ int main() {
 				if (ans == 'y') {
 					change.modifyEmployee(originalEmps[search.searchIndex(originalEmps,searchEmps[0].getID())]);
 				}
-				else {
-
+				else if (ans == 'n') {
+					cout << "The employee's information remains unchanged." << endl;
+					break;
 				}
 			}
 		}
