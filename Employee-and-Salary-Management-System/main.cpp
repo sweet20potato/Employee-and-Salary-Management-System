@@ -75,19 +75,18 @@ int main() {
 				cin >> ans;
 				if (ans == 'y') {
 					change.modifyEmployee(originalEmps[search.searchIndex(originalEmps,searchEmps[0].getID())]);
-				}	
-				else if (ans == 'n') {
-					cout << "The employee's information remains unchanged." << endl;
-					break;
 				}
+				else {
 
+				}
 			}
 		}
 		else if (input == "add") {
 
 		}
 		else if (input == "del") {
-
+			vector<Employee>& originalEmps = manage.getEmployees();
+			change.delEmployee(originalEmps);
 		}
 		else if (input == "show") {
 			manage.printReport();
