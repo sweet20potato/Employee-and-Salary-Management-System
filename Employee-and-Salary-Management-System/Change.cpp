@@ -85,7 +85,7 @@ void Change::delEmployee(vector<Employee>& employees) {
 
 	for(int i=0;i<employees.size();i++){
 		if(employees[i].getName()==delName){
-			cout<<"ID:"<<employees[i].getID()<<"Name:"<<employees[i].getName()<<endl;
+			cout<<"ID:"<<employees[i].getID()<<" Name:"<<employees[i].getName()<<endl;
 		
 
 		}
