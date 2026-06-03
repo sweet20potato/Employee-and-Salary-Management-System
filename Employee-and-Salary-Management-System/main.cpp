@@ -83,7 +83,8 @@ int main() {
 			}
 		}
 		else if (input == "add") {
-
+			vector<Employee>& originalEmps = manage.getEmployees();
+			change.addEmployee(originalEmps);
 		}
 		else if (input == "del") {
 			vector<Employee>& originalEmps = manage.getEmployees();
