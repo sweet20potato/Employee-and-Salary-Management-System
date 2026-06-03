@@ -51,9 +51,56 @@ void Change::modifyEmployee(Employee& emp) {
 	emp.print();
 }
 
-void Change::addEmployee() {
+void Change::addEmployee(vector<Employee>& employees) {
+    Employee newEmp;
+    string name, type, id;
+    double baseSalary;
 
+    cout << "Enter employee name: ";
+    getline(cin, name);
+    newEmp.setName(name);
+
+    cout << "Enter employee type (full/part): ";
+    getline(cin, type);
+    newEmp.setType(type);
+
+    // 初始化隨機種子
+    srand(time(nullptr));
+
+    // 生成唯一 ID
+    bool unique = false;
+    while (!unique) {
+        int num = rand() % 900 + 100; // 100~999
+        if (type == "full") {
+            id = "f" + to_string(num);
+        } else {
+            id = "p" + to_string(num);
+        }
+
+        // 檢查是否重複
+        unique = true;
+        for (auto& emp : employees) {
+            if (emp.getID() == id) {
+                unique = false;
+                break;
+            }
+        }
+    }
+    newEmp.setID(id);
+
+    cout << "Enter employee base salary: ";
+    cin >> baseSalary;
+    cin.ignore();
+    newEmp.setBaseSalary(baseSalary);
+
+    // 出勤狀況預設為 0/0/0
+    newEmp.setAttendance(0, 0, 0);
+
+    employees.push_back(newEmp);
+
+    cout << "Employee added successfully. ID = " << id << endl;
 }
+
 
 void Change::delEmployee(vector<Employee>& employees) {
 	cout <<"Enter employee name:";
@@ -86,8 +133,6 @@ void Change::delEmployee(vector<Employee>& employees) {
 	for(int i=0;i<employees.size();i++){
 		if(employees[i].getName()==delName){
 			cout<<"ID:"<<employees[i].getID()<<" Name:"<<employees[i].getName()<<endl;
-		
-
 		}
 	}
 	string delID;
