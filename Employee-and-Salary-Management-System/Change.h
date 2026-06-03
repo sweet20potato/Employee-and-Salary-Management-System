@@ -7,7 +7,7 @@
 class Change {
 public:
 	void modifyEmployee(Employee&);
-	void addEmployee();
+	void addEmployee(vector<Employee>&);
 	void delEmployee(vector<Employee>&);
 };
 
