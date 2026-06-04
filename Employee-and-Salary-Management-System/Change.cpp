@@ -8,19 +8,30 @@ void Change::modifyEmployee(Employee& emp) {
 		cin.ignore();
 	}
 	//吃掉殘留的換行=>防止初始cout兩次
-
 	while (true) {
-
 		cout << endl << "The employee's original information is as follows: " << endl;
 		emp.print();
-
-		cout << "lease enter the information you want to change (type/name/salary/attend) (Enter [done] to finish editing): ";
+		cout << "Please enter the information you want to change (type/name/salary/attend) (Enter [done] to finish editing): ";
 		string keyword;
 		getline(cin, keyword);
 		if (keyword == "done") break;
 		else if (keyword == "type") {
-			if (emp.getType() == "full") emp.setType("part");
-			else emp.setType("full");
+			string currentType = emp.getType();
+			string currentID = emp.getID();
+			if (currentType == "full") {
+				emp.setType("part");
+				if (!currentID.empty() && currentID[0] == 'f') {
+					currentID[0] = 'p';
+					emp.setID(currentID);
+				}
+			}
+			else if (currentType == "part") {
+				emp.setType("full");
+				if (!currentID.empty() && currentID[0] == 'p') {
+					currentID[0] = 'f';
+					emp.setID(currentID);
+				}
+			}
 		}
 		else if (keyword == "name") {
 			cout << "Enter the name you want to change it to: ";
@@ -99,6 +110,7 @@ void Change::addEmployee(vector<Employee>& employees) {
     employees.push_back(newEmp);
 
     cout << "Employee added successfully. ID = " << id << endl;
+	cout << endl;
 }
 
 
