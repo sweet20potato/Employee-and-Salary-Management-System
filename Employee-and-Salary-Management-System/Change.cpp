@@ -3,6 +3,7 @@
 #include <sstream>
 using namespace std;
 
+//修改員工資料
 void Change::modifyEmployee(Employee& emp) {
 	if (cin.peek() == '\n') {
 		cin.ignore();
@@ -15,6 +16,7 @@ void Change::modifyEmployee(Employee& emp) {
 		string keyword;
 		getline(cin, keyword);
 		if (keyword == "done") break;
+		//修改員工類型
 		else if (keyword == "type") {
 			string currentType = emp.getType();
 			string currentID = emp.getID();
@@ -33,12 +35,14 @@ void Change::modifyEmployee(Employee& emp) {
 				}
 			}
 		}
+		//修改員工姓名
 		else if (keyword == "name") {
 			cout << "Enter the name you want to change it to: ";
 			string newName;
 			getline(cin, newName);
 			emp.setName(newName);
 		}
+		//修改員工薪水
 		else if (keyword == "salary") {
 			cout << "Enter the salary you want to change it to: ";
 			double newSalary;
@@ -46,6 +50,7 @@ void Change::modifyEmployee(Employee& emp) {
 			cin.ignore(); //吃掉殘留的換行=>防止初始cout兩次
 			emp.setBaseSalary(newSalary);
 		}
+		//修改員工出勤狀況
 		else if (keyword == "attend") {
 			cout << "Enter the attendance you want to change it to: ";
 			string newAttendance;
@@ -62,11 +67,12 @@ void Change::modifyEmployee(Employee& emp) {
 	emp.print();
 }
 
+//新增員工
 void Change::addEmployee(vector<Employee>& employees) {
     Employee newEmp;
     string name, type, id;
     double baseSalary;
-
+	//輸入新員工姓名、類型、薪水
     cout << "Enter employee name: ";
     getline(cin, name);
     newEmp.setName(name);
@@ -74,8 +80,6 @@ void Change::addEmployee(vector<Employee>& employees) {
     cout << "Enter employee type (full/part): ";
     getline(cin, type);
     newEmp.setType(type);
-
-    // 初始化隨機種子
     srand(time(nullptr));
 
     // 生成唯一 ID
@@ -84,7 +88,8 @@ void Change::addEmployee(vector<Employee>& employees) {
         int num = rand() % 900 + 100; // 100~999
         if (type == "full") {
             id = "f" + to_string(num);
-        } else {
+        }
+		else {
             id = "p" + to_string(num);
         }
 
@@ -113,16 +118,16 @@ void Change::addEmployee(vector<Employee>& employees) {
 	cout << endl;
 }
 
-
+//刪除員工
 void Change::delEmployee(vector<Employee>& employees) {
-	cout <<"Enter employee name:";
+	cout <<"Enter employee name or ID: ";
 	string delName;
 	getline(cin,delName);
 
 	int count = 0;
 
 	for(int i=0;i<employees.size();i++){
-		if(employees[i].getName()==delName){
+		if(employees[i].getName()==delName || employees[i].getID()==delName){
 			count++;
 		}
 	}
@@ -132,7 +137,7 @@ void Change::delEmployee(vector<Employee>& employees) {
 	}
 	if(count==1){
 		for(int i=0;i<employees.size();i++){
-			if(employees[i].getName()==delName){
+			if(employees[i].getName()==delName || employees[i].getID()==delName){
 				employees.erase(employees.begin()+i);
 				cout<<"Employee deleted successfully"<<endl;
 				return;
