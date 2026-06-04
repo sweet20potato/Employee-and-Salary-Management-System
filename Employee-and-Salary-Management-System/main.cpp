@@ -43,7 +43,7 @@ int main() {
 			else if (keyword.find(" ") != string::npos) {
 				searchEmps = search.foundName(originalEmps, keyword);
 			}
-			else if (isdigit(keyword[0])) {
+			else if (keyword[0] == 'f' || keyword[0] == 'p') {
 				searchEmps = search.foundID(originalEmps, keyword);
 			}
 			else {
