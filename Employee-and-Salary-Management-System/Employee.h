@@ -6,7 +6,7 @@
 using namespace std;
 class Employee
 {
-private:
+protected:
 	string id;
 	string name;
 	string type;
@@ -17,7 +17,7 @@ private:
 public:
 	Employee();
 	Employee(string, string, string, double, Attendance);
-	~Employee();
+	virtual ~Employee();
 
 	void setID(string);
 	void setName(string);
@@ -31,7 +31,7 @@ public:
 	double getBaseSalary() const;
 	Attendance getAttendance() const;
 
-	double getBonus() const;
+	virtual double getBonus() const;
 
 	void print();
 
