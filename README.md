@@ -25,3 +25,18 @@
 > 
 > 或者，直接下載 [Employee-and-Salary-Management-System.zip](<https://github.com/sweet20potato/Employee-and-Salary-Management-System/blob/65d424f217c003f3b86977219a6c349495bc0034/Employee-and-Salary-Management-System.zip>)，解壓縮後，於任一可執行C++語言之編譯器編譯並執行即可。
 #
+### 系統運行：
+1. 系統顯示當前員工資訊及財務報表，並詢問要執行什麼功能
+2. 輸入想要執行功能後，依照提示，搜尋要的更動的員工及員工資訊
+> [!NOTE]
+> #### 請依照括弧內的提示輸入要執行的功能，如：
+> 
+> 想要查找員工，並對其資料進行更動，請輸入"find"。
+> 
+> 在搜尋員工時，可依照括弧內提示，直接輸入該員工的ID、姓名或職位類別。
+>
+
+> [!IMPORTANT]
+> 請確認輸入的關鍵字符合括弧內的提示詞，注意大小寫、ID、姓名等正確性，否則可能無法執行想要的應用
+
+3. 
