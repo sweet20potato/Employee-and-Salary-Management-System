@@ -33,7 +33,7 @@ void Employee::print() {
 		<< setw(16) << getName()
 		<< setw(8) << getType()
 		<< setw(12) << getBaseSalary()
-		<< setw(32) << getAttendance().print()
+		<< setw(20) << getAttendance().print()
 		<< setw(8) << getBonus() << endl;
 }
 
