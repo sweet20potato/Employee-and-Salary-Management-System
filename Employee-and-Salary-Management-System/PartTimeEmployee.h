@@ -7,7 +7,7 @@ public:
 	PartTimeEmployee(string id,string name,double baseSalary,Attendance attend):Employee(id,name,"part",baseSalary,attend){}
 
 	double getBonus() const override {
-		return 0.0;
+		return bonus;
 	}
 };
 
