@@ -22,6 +22,7 @@ public:
 	int getLateHour();
 
 	string print();
+	double getFinalSalary(double baseSalary) const;
 };
 
 #endif
