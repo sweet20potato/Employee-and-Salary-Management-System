@@ -5,16 +5,17 @@ using namespace std;
 
 void Change::modifyEmployee(Employee& emp) {
 	if (cin.peek() == '\n') {
-		cin.ignore();
+		cin.ignore();//吃掉殘留的換行=>防止初始cout兩次
 	}
-	//吃掉殘留的換行=>防止初始cout兩次
+	// 允許使用者多次修改同一員工的不同資訊，直到輸入 "done" 為止
 	while (true) {
 		cout << endl << "The employee's original information is as follows: " << endl;
 		emp.print();
-		cout << "Please enter the information you want to change (type/name/salary/attend) (Enter [done] to finish editing): ";
+		cout << "Please enter the information you want to change (type/name/salary/attend/bonus) (Enter [done] to finish editing): ";
 		string keyword;
 		getline(cin, keyword);
 		if (keyword == "done") break;
+		// 修改員工類型
 		else if (keyword == "type") {
 			string currentType = emp.getType();
 			string currentID = emp.getID();
@@ -33,12 +34,14 @@ void Change::modifyEmployee(Employee& emp) {
 				}
 			}
 		}
+		// 修改員工姓名
 		else if (keyword == "name") {
 			cout << "Enter the name you want to change it to: ";
 			string newName;
 			getline(cin, newName);
 			emp.setName(newName);
 		}
+		// 修改員工基本薪資
 		else if (keyword == "salary") {
 			cout << "Enter the salary you want to change it to: ";
 			double newSalary;
@@ -46,6 +49,7 @@ void Change::modifyEmployee(Employee& emp) {
 			cin.ignore(); //吃掉殘留的換行=>防止初始cout兩次
 			emp.setBaseSalary(newSalary);
 		}
+		// 修改員工出勤狀況
 		else if (keyword == "attend") {
 			cout << "Enter the attendance you want to change it to: ";
 			string newAttendance;
@@ -57,15 +61,38 @@ void Change::modifyEmployee(Employee& emp) {
 
 			emp.setAttendance(personLeave, sickLeave, lateTimes);
 		}
+		// 修改員工獎金
+		else if (keyword == "bonus") {
+			cout << "Enter the number of sales this month : ";
+			double performance;
+			cin >> performance;
+			cin.ignore(); //吃掉殘留的換行=>防止初始cout兩次
+			double bonus = 0.0;
+			// 根據業績表現計算獎金
+			if (performance >= 8) {
+				bonus = emp.getBaseSalary() * 0.2;
+			}
+			else if (performance >= 6) {
+				bonus = emp.getBaseSalary() * 0.1;
+			}
+			else if (performance >= 3) {
+				bonus = emp.getBaseSalary() * 0.05;
+			}
+			else {
+				bonus = 0.0; 
+			}
+			emp.setBonus(bonus);
+		}
 	}
 	cout << "The employee's information has been changed as follows: ";
 	emp.print();
 }
 
+//新增員工
 void Change::addEmployee(vector<unique_ptr<Employee>>& employees) {
 	string name, type, id;
 	double baseSalary;
-
+	// 新增員工資訊
 	cout << "Enter employee name: ";
 	getline(cin, name);
 
@@ -85,8 +112,7 @@ void Change::addEmployee(vector<unique_ptr<Employee>>& employees) {
 		else {
 			id = "p" + to_string(num);
 		}
-
-		// 檢查是否重複
+		// 檢查ID是否重複
 		unique = true;
 		for (auto& emp : employees) {
 			if (emp->getID() == id) {
@@ -95,11 +121,10 @@ void Change::addEmployee(vector<unique_ptr<Employee>>& employees) {
 			}
 		}
 	}
-
+	// 輸入新員工基本薪資
 	cout << "Enter employee base salary: ";
 	cin >> baseSalary;
 	cin.ignore();
-
 	// 出勤狀況預設為 0/0/0
 	if (type == "full") {
 		employees.push_back(make_unique<FullTimeEmployee>(id, name, baseSalary, Attendance(0, 0, 0)));
@@ -112,14 +137,13 @@ void Change::addEmployee(vector<unique_ptr<Employee>>& employees) {
 	cout << endl;
 }
 
-
+//刪除員工
 void Change::delEmployee(vector<unique_ptr<Employee>>& employees) {
 	cout << "Enter employee name or id:";
 	string delNameOrID;
 	getline(cin, delNameOrID);
-
+	// 先檢查是否有符合的員工
 	int count = 0;
-
 	for (int i = 0; i < employees.size(); i++) {
 		if (employees[i]->getName() == delNameOrID || employees[i]->getID() == delNameOrID) {
 			count++;
@@ -140,7 +164,7 @@ void Change::delEmployee(vector<unique_ptr<Employee>>& employees) {
 	}
 	cout << "Multiple employees with the same name found." << endl;
 	cout << "Please enter employee ID." << endl;
-
+	// 列出所有符合名稱的員工資訊
 	for (int i = 0; i < employees.size(); i++) {
 		if (employees[i]->getName() == delNameOrID) {
 			cout << "ID:" << employees[i]->getID() << " Name:" << employees[i]->getName() << endl;
@@ -150,7 +174,7 @@ void Change::delEmployee(vector<unique_ptr<Employee>>& employees) {
 	cout << "Enter ID:";
 	cin >> delID;
 	cin.ignore();
-
+	// 根據ID刪除員工
 	for (int i = 0; i < employees.size(); i++) {
 		if (employees[i]->getID() == delID) {
 			employees.erase(employees.begin() + i);
