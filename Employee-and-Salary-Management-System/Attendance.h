@@ -8,7 +8,7 @@ class Attendance
 private:
 	int personalLeave;
 	int sickLeave;
-	int lateHour;
+	int lateDate;
 public:
 	Attendance();
 	Attendance(int, int, int);
