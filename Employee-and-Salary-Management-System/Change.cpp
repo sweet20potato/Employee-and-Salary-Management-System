@@ -3,7 +3,6 @@
 #include <sstream>
 using namespace std;
 
-//修改員工資料
 void Change::modifyEmployee(Employee& emp) {
 	if (cin.peek() == '\n') {
 		cin.ignore();
@@ -16,7 +15,6 @@ void Change::modifyEmployee(Employee& emp) {
 		string keyword;
 		getline(cin, keyword);
 		if (keyword == "done") break;
-		//修改員工類型
 		else if (keyword == "type") {
 			string currentType = emp.getType();
 			string currentID = emp.getID();
@@ -35,14 +33,12 @@ void Change::modifyEmployee(Employee& emp) {
 				}
 			}
 		}
-		//修改員工姓名
 		else if (keyword == "name") {
 			cout << "Enter the name you want to change it to: ";
 			string newName;
 			getline(cin, newName);
 			emp.setName(newName);
 		}
-		//修改員工薪水
 		else if (keyword == "salary") {
 			cout << "Enter the salary you want to change it to: ";
 			double newSalary;
@@ -50,7 +46,6 @@ void Change::modifyEmployee(Employee& emp) {
 			cin.ignore(); //吃掉殘留的換行=>防止初始cout兩次
 			emp.setBaseSalary(newSalary);
 		}
-		//修改員工出勤狀況
 		else if (keyword == "attend") {
 			cout << "Enter the attendance you want to change it to: ";
 			string newAttendance;
@@ -60,109 +55,108 @@ void Change::modifyEmployee(Employee& emp) {
 			int personLeave, sickLeave, lateTimes;
 			ss >> personLeave >> flash >> sickLeave >> flash >> lateTimes;
 
-			emp.setAttendance(personLeave,sickLeave,lateTimes);
+			emp.setAttendance(personLeave, sickLeave, lateTimes);
 		}
 	}
 	cout << "The employee's information has been changed as follows: ";
 	emp.print();
 }
 
-//新增員工
-void Change::addEmployee(vector<Employee>& employees) {
-    Employee newEmp;
-    string name, type, id;
-    double baseSalary;
-	//輸入新員工姓名、類型、薪水
-    cout << "Enter employee name: ";
-    getline(cin, name);
-    newEmp.setName(name);
+void Change::addEmployee(vector<unique_ptr<Employee>>& employees) {
+	string name, type, id;
+	double baseSalary;
 
-    cout << "Enter employee type (full/part): ";
-    getline(cin, type);
-    newEmp.setType(type);
-    srand(time(nullptr));
+	cout << "Enter employee name: ";
+	getline(cin, name);
 
-    // 生成唯一 ID
-    bool unique = false;
-    while (!unique) {
-        int num = rand() % 900 + 100; // 100~999
-        if (type == "full") {
-            id = "f" + to_string(num);
-        }
+	cout << "Enter employee type (full/part): ";
+	getline(cin, type);
+
+	// 初始化隨機種子
+	srand(time(0));
+
+	// 生成唯一 ID
+	bool unique = false;
+	while (!unique) {
+		int num = rand() % 900 + 100; // 100~999
+		if (type == "full") {
+			id = "f" + to_string(num);
+		}
 		else {
-            id = "p" + to_string(num);
-        }
+			id = "p" + to_string(num);
+		}
 
-        // 檢查是否重複
-        unique = true;
-        for (auto& emp : employees) {
-            if (emp.getID() == id) {
-                unique = false;
-                break;
-            }
-        }
-    }
-    newEmp.setID(id);
+		// 檢查是否重複
+		unique = true;
+		for (auto& emp : employees) {
+			if (emp->getID() == id) {
+				unique = false;
+				break;
+			}
+		}
+	}
 
-    cout << "Enter employee base salary: ";
-    cin >> baseSalary;
-    cin.ignore();
-    newEmp.setBaseSalary(baseSalary);
+	cout << "Enter employee base salary: ";
+	cin >> baseSalary;
+	cin.ignore();
 
-    // 出勤狀況預設為 0/0/0
-    newEmp.setAttendance(0, 0, 0);
+	// 出勤狀況預設為 0/0/0
+	if (type == "full") {
+		employees.push_back(make_unique<FullTimeEmployee>(id, name, baseSalary, Attendance(0, 0, 0)));
+	}
+	else {
+		employees.push_back(make_unique<PartTimeEmployee>(id, name, baseSalary, Attendance(0, 0, 0)));
+	}
 
-    employees.push_back(newEmp);
-
-    cout << "Employee added successfully. ID = " << id << endl;
+	cout << "Employee added successfully. ID = " << id << endl;
 	cout << endl;
 }
 
-//刪除員工
-void Change::delEmployee(vector<Employee>& employees) {
-	cout <<"Enter employee name or ID: ";
-	string delName;
-	getline(cin,delName);
+
+void Change::delEmployee(vector<unique_ptr<Employee>>& employees) {
+	cout << "Enter employee name or id:";
+	string delNameOrID;
+	getline(cin, delNameOrID);
 
 	int count = 0;
 
-	for(int i=0;i<employees.size();i++){
-		if(employees[i].getName()==delName || employees[i].getID()==delName){
+	for (int i = 0; i < employees.size(); i++) {
+		if (employees[i]->getName() == delNameOrID || employees[i]->getID() == delNameOrID) {
 			count++;
 		}
 	}
-	if(count==0){
-		cout<<"Employee not found."<<endl;
+	if (count == 0) {
+		cout << "Employee not found." << endl;
 		return;
 	}
-	if(count==1){
-		for(int i=0;i<employees.size();i++){
-			if(employees[i].getName()==delName || employees[i].getID()==delName){
-				employees.erase(employees.begin()+i);
-				cout<<"Employee deleted successfully"<<endl;
+	if (count == 1) {
+		for (int i = 0; i < employees.size(); i++) {
+			if (employees[i]->getName() == delNameOrID) {
+				employees.erase(employees.begin() + i);
+				cout << "Employee deleted successfully" << endl;
 				return;
 			}
 		}
 	}
-	cout<<"Multiple employees with the same name found."<<endl;
-	cout<<"Please enter employee ID."<<endl;
+	cout << "Multiple employees with the same name found." << endl;
+	cout << "Please enter employee ID." << endl;
 
-	for(int i=0;i<employees.size();i++){
-		if(employees[i].getName()==delName){
-			cout<<"ID:"<<employees[i].getID()<<" Name:"<<employees[i].getName()<<endl;
+	for (int i = 0; i < employees.size(); i++) {
+		if (employees[i]->getName() == delNameOrID) {
+			cout << "ID:" << employees[i]->getID() << " Name:" << employees[i]->getName() << endl;
 		}
 	}
 	string delID;
-	cout<<"Enter ID:";
-	cin>>delID;
+	cout << "Enter ID:";
+	cin >> delID;
 	cin.ignore();
 
-	for(int i=0;i<employees.size();i++){
-		if(employees[i].getID()==delID){
-			employees.erase(employees.begin()+i);
-			cout<<"Employee deleted successfully."<<endl;
+	for (int i = 0; i < employees.size(); i++) {
+		if (employees[i]->getID() == delID) {
+			employees.erase(employees.begin() + i);
+			cout << "Employee deleted successfully." << endl;
 			return;
 		}
 	}
-	cout<<"ID not found."<<endl;
+	cout << "ID not found." << endl;
 }
