@@ -86,6 +86,7 @@ void Read::printReport() {
 		<< setw(12) << "BASESALARY"
 		<< setw(20) << "ATTENDANCE(P/S/L)"
 		<< setw(8) << "BONUS"
+		<< setw(12) << "FINAL SALARY"
 		<< endl;
 	for (auto& emp : employees) {
 		emp->print();
