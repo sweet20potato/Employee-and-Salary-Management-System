@@ -32,6 +32,7 @@ public:
 	Attendance getAttendance() const;
 
 	virtual double getBonus() const;
+	double getFinalSalary() const;
 
 	void print();
 
