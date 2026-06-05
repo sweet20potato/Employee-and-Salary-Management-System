@@ -12,6 +12,7 @@ protected:
 	string type;
 	double baseSalary;
 	Attendance attend;
+	double bonus;
 
 	static int numOfEmployee;
 public:
@@ -32,6 +33,7 @@ public:
 	Attendance getAttendance() const;
 
 	virtual double getBonus() const;
+	void setBonus(double bonus);
 	double getFinalSalary() const;
 
 	void print();
