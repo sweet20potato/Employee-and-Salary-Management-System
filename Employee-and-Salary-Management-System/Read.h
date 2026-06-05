@@ -2,21 +2,24 @@
 #define READ_H
 
 #include <string>
+#include <memory>
 #include <vector>
 #include "Employee.h"
+#include "FullTimeEmployee.h"
+#include "PartTimeEmployee.h"
 using namespace std;
 
 class Read {
 private:
     string filename;
-    vector<Employee> employees;
+    vector<unique_ptr<Employee>> employees;
 
 public:
     Read(const string& filename);
     void loadData();
     void printReport();
     void saveData();
-    vector<Employee>& getEmployees();
+    vector<unique_ptr<Employee>>& getEmployees();
     vector<Employee> copyEmployees;
 };
 
