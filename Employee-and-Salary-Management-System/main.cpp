@@ -34,27 +34,23 @@ int main() {
 			getline(cin, keyword);
 			if (keyword.empty()) continue;
 
-			vector<Employee>& originalEmps = manage.getEmployees();
+			vector<unique_ptr<Employee>>& originalEmps = manage.getEmployees();
 			vector<Employee> searchEmps;
 
 			if (keyword == "part" || keyword == "full") {
-					searchEmps = search.foundType(originalEmps, keyword);
-			}
-			else if (keyword.find(" ") != string::npos) {
-				searchEmps = search.foundName(originalEmps, keyword);
+				searchEmps = search.foundType(originalEmps, keyword);
 			}
 			else if (keyword[0] == 'f' || keyword[0] == 'p') {
 				searchEmps = search.foundID(originalEmps, keyword);
 			}
-			else {
-				cout << "The input is invalid, please try again." << endl;
-				continue;
+			else if (!keyword.empty()) {
+				searchEmps = search.foundName(originalEmps, keyword);
 			}
 
 			if (searchEmps.empty()) cout << "Unable to find qualified employees" << endl;
 			else {
 				Employee target;
-				
+
 				if (searchEmps.size() != 1) {
 					cout << "--- Find the following qualified employees ---" << endl;
 					for (Employee& emp : searchEmps) {
@@ -74,7 +70,7 @@ int main() {
 				char ans;
 				cin >> ans;
 				if (ans == 'y') {
-					change.modifyEmployee(originalEmps[search.searchIndex(originalEmps,searchEmps[0].getID())]);
+					change.modifyEmployee(*(originalEmps[search.searchIndex(originalEmps, searchEmps[0].getID())]));
 				}
 				else if (ans == 'n') {
 					cout << "The employee's information remains unchanged." << endl;
@@ -83,11 +79,11 @@ int main() {
 			}
 		}
 		else if (input == "add") {
-			vector<Employee>& originalEmps = manage.getEmployees();
+			vector<unique_ptr<Employee>>& originalEmps = manage.getEmployees();
 			change.addEmployee(originalEmps);
 		}
 		else if (input == "del") {
-			vector<Employee>& originalEmps = manage.getEmployees();
+			vector<unique_ptr<Employee>>& originalEmps = manage.getEmployees();
 			change.delEmployee(originalEmps);
 		}
 		else if (input == "show") {
@@ -97,6 +93,8 @@ int main() {
 			cout << "Invalid option, please re-enter." << endl;
 		}
 	}
+
+	manage.saveData();
 
 	return 0;
 }
