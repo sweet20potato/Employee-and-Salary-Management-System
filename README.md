@@ -7,8 +7,6 @@
 
 > [👩🏻‍💻高語涵] 部分程式碼撰寫、UML、PPT
 
-> [!TIP] 系統執行&安裝
-> 下載"download"
-
 > [!TIP]
-> Helpful advice for doing things better or more easily.
+> ##### 系統安裝 & 執行：
+> 
