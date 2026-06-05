@@ -9,6 +9,6 @@
 
 > [!TIP]
 > #### 系統安裝 & 執行：
-> 下載本專案所有程式碼，放到同一資料夾，並於任一可執行C++語言之編譯器編譯並執行即可。
+> 下載本專案資料夾"Employee-and-Salary-Management-System"中的所有檔案，放到同一資料夾，並於任一可執行C++語言之編譯器編譯並執行。
 > 
-> 或者，直接下載"Employee-and-Salary-Management-System.zip"，解壓縮後，於任一可執行C++語言之編譯器編譯並執行。
+> 或者，直接下載"Employee-and-Salary-Management-System.zip"，解壓縮後，於任一可執行C++語言之編譯器編譯並執行即可。
