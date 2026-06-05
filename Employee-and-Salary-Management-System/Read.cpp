@@ -44,7 +44,7 @@ void Read::loadData() {
 		if (getline(ss, baseSalary, ',')) {
 			// trim whitespace
 			auto first = baseSalary.find_first_not_of(" \t\r\n");
-			if (first == string::npos) {
+			if (first != string::npos) {
 				auto last = baseSalary.find_last_not_of("\t\r\n");
 				string trimmed = baseSalary.substr(first, last - first + 1);
 				try {
