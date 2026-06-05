@@ -104,7 +104,9 @@ void Read::saveData() {
 			 << "," << emp->getAttendance().getPersonalLeave() << "/"
 			 << emp->getAttendance().getSickLeave() << "/"
 			 << emp->getAttendance().getLateHour()
-			 << "," << emp->getBonus() << endl;
+			 << "," << emp->getBonus()
+			 << "," << emp->getFinalSalary()
+			 << endl;
 	}
 }
 
