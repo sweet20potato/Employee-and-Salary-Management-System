@@ -27,6 +27,10 @@ double Employee::getBaseSalary() const { return baseSalary; }
 Attendance Employee::getAttendance() const { return attend; }
 
 double Employee::getBonus() const { return 0; }
+double Employee::getFinalSalary() const {
+    return attend.getFinalSalary(baseSalary) + getBonus();
+}
+
 
 void Employee::print() {
 	cout << left << setw(8) << getID()
@@ -34,7 +38,8 @@ void Employee::print() {
 		<< setw(8) << getType()
 		<< setw(12) << getBaseSalary()
 		<< setw(20) << getAttendance().print()
-		<< setw(8) << getBonus() << endl;
+		<< setw(8) << getBonus()
+		<< setw(12) << getFinalSalary() << endl;	
 }
 
 int Employee::getNumOfEmployee() { return numOfEmployee; }
