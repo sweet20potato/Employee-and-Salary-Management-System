@@ -8,13 +8,13 @@ using namespace std;
 
 Read::Read(const string& filename) :filename(filename) {}
 
+// 從CSV檔案讀取員工資料
 void Read::loadData() {
     ifstream file(filename);
 	if (!file.is_open()) {
 		cerr << "Failed to open file: " << filename << endl;
 		return;
 	}
-
 	// === 處理 UTF-8 BOM 亂碼關鍵程式碼 ===
 	unsigned char bom[3] = { 0 };
 	file.read((char*)bom, 3);
@@ -39,10 +39,10 @@ void Read::loadData() {
 		getline(ss, name, ',');
 		getline(ss, type, ',');
 
-		// read and parse baseSalary safely
+		// 讀取並解析基本薪資，處理可能的格式問題
 		double parsedSalary = 0.0;
 		if (getline(ss, baseSalary, ',')) {
-			// trim whitespace
+			// 去除基本薪資字串前後的空白和控制字元
 			auto first = baseSalary.find_first_not_of(" \t\r\n");
 			if (first != string::npos) {
 				auto last = baseSalary.find_last_not_of("\t\r\n");
@@ -57,7 +57,7 @@ void Read::loadData() {
 			}
 		}
 
-		// read and parse attendance (format expected: personal/sick/late)
+		// 讀取並解析出勤資料 (格式預期: personal/sick/late)
 		int p = 0, s = 0, l = 0;
 		if (getline(ss, attend, ',')) {
 			if (!attend.empty()) {
@@ -78,6 +78,7 @@ void Read::loadData() {
 	}
 }
 
+// 列印員工報表
 void Read::printReport() {
 	cout << "========================== EMPLOYEE REPORT ==========================" << endl;
 	cout << left << setw(8) << "ID"
@@ -94,6 +95,7 @@ void Read::printReport() {
 	cout << "======================================================================" << endl;
 }
 
+// 將員工資料寫回CSV檔案
 void Read::saveData() {
 	ofstream file(filename);
 	for (auto& emp : employees) {
