@@ -17,11 +17,11 @@ public:
 	void setSickLeave(int);
 	void setLateHour(int);
 
-	int getPersonalLeave();
-	int getSickLeave();
-	int getLateHour();
+	int getPersonalLeave() const;
+	int getSickLeave() const;
+	int getLateHour() const;
 
-	string print();
+	string print() const;
 	double getFinalSalary(double baseSalary) const;
 };
 
