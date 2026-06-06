@@ -20,7 +20,6 @@ public:
     void printReport();
     void saveData();
     vector<unique_ptr<Employee>>& getEmployees();
-    vector<Employee> copyEmployees;
 };
 
 #endif
