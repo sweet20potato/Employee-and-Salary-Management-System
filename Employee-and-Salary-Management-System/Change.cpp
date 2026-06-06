@@ -149,14 +149,16 @@ void Change::delEmployee(vector<unique_ptr<Employee>>& employees) {
 			}
 		}
 	}
-	cout << "Multiple employees with the same name found." << endl;
-	cout << "Please enter employee ID." << endl;
-	// 列出所有符合名稱的員工資訊
-	for (int i = 0; i < employees.size(); i++) {
-		if (employees[i]->getName() == delNameOrID) {
-			cout << "ID:" << employees[i]->getID() << " Name:" << employees[i]->getName() << endl;
+	else if (count > 1) {
+		cout << "Multiple employees with the same name found." << endl;
+		cout << "Please enter employee ID." << endl;
+		// 列出所有符合名稱的員工資訊
+		for (int i = 0; i < employees.size(); i++) {
+			if (employees[i]->getName() == delNameOrID) {
+				cout << "ID:" << employees[i]->getID() << " Name:" << employees[i]->getName() << endl;
+			}
 		}
-	}
+	}	
 	string delID;
 	cout << "Enter ID:";
 	cin >> delID;
