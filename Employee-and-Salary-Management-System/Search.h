@@ -14,7 +14,7 @@ public:
 
 	vector<Employee> foundID(vector<Employee>&, const string);
 
-	int searchIndex(vector<unique_ptr<Employee>>&,string);
+	int searchIndex(vector<unique_ptr<Employee>>&, string);
 };
 
 #endif
