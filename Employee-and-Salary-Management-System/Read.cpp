@@ -24,7 +24,7 @@ void Read::loadData() {
 		getline(ss, type, ',');
 		getline(ss, baseSalaryStr, ',');
 		getline(ss, attendStr, ',');
-		getline(ss, bonusStr, ',');
+		getline(ss, bonusStr);
 
 		double parsedSalary = stod(baseSalaryStr);
 		double parsedBonus = stod(bonusStr);
@@ -74,7 +74,6 @@ void Read::saveData() {
 			<< emp->getAttendance().getSickLeave() << "/"
 			<< emp->getAttendance().getLateHour()
 			<< "," << emp->getBonus()
-			<< "," << emp->getFinalSalary()
 			<< "\n";
 	}
 }
