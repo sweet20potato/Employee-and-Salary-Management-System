@@ -1,4 +1,4 @@
-#ifndef CHAMGE_H
+#ifndef CHANGE_H
 #define CHANGE_H
 
 #include <iostream>
