@@ -1,16 +1,16 @@
 id,name,type,baseSalary,attendance,bonus
 f101,Amy Lin,full,45000,4/1/0,0
-f121,John Chang,full,48500,1/0/0,0
+f121,John Chang,full,48500,1/0/0,14550
 p311,David Wang,part,28000,2/3/1,0
-f247,Emily Chen,full,52000,0/0/0,0
+f247,Emily Chen,full,52000,0/0/0,10400
 f594,Michael Huang,full,43000,1/2/0,0
 p643,Sarah Wu,part,26500,0/4/0,0
 f347,Kevin Liu,full,61000,0/0/0,0
 f826,James Tsai,full,39800,3/1/0,0
-p193,Jessica Ho,part,31200,1/1/0,0
+p193,Jessica Ho,part,31200,1/1/0,1560
 f354,John Chang,full,46000,0/2/0,0
 f485,Amy Lin,full,55000,4/0/0,0
 p983,Chris Lu,part,25000,2/2/2,0
-f186,Lisa Su,full,47500,0/1/0,0
+f186,Lisa Su,full,47500,0/1/0,4750
 p729,Ryan Yeh,part,29000,0/0/0,0
 f543,Jason Hsu,full,50000,1/3/0,0
