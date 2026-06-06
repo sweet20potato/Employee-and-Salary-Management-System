@@ -4,7 +4,7 @@
 #include "Employee.h"
 class FullTimeEmployee :public Employee {
 public:
-	FullTimeEmployee(string id,string name, double baseSalary, Attendance attend, double bonus):Employee(id,name,"full",baseSalary,attend,bonus){}
+	FullTimeEmployee(string id, string name, double baseSalary, Attendance attend, double bonus):Employee(id,name,"full",baseSalary,attend,bonus){}
 
 	void setBonus(double performance) override {
 		double newBonus;
