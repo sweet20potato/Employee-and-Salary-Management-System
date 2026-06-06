@@ -38,7 +38,15 @@ Attendance Employee::getAttendance() const { return attend; }
 double Employee::getBonus() const { return bonus; }
 
 double Employee::getFinalSalary() const {
-    return attend.getFinalSalary(baseSalary) + getBonus();
+    double finalSalary = attend.getFinalSalary(baseSalary) + getBonus();
+    //全勤獎金
+    if (attend.getPersonalLeave() == 0 &&
+        attend.getSickLeave() == 0 &&
+        attend.getLateHour() == 0) {
+        finalSalary += 1000;
+    }
+
+    return finalSalary;
 }
 
 void Employee::print() {
