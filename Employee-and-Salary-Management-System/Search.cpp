@@ -3,9 +3,9 @@
 // Search類別的成員函式實作
 vector<Employee> Search::foundName(vector<unique_ptr<Employee>>& emps, const string keyword) {
 	vector<Employee> newEmployee;
-	
+
 	for (auto& employee : emps) {
-		if (employee->getName().find(keyword)!=string::npos) {
+		if (employee->getName().find(keyword) != string::npos) {
 			newEmployee.push_back(*employee);
 		}
 	}
@@ -15,8 +15,8 @@ vector<Employee> Search::foundName(vector<unique_ptr<Employee>>& emps, const str
 // 搜尋員工類型在給定員工列表中的匹配項目
 vector<Employee> Search::foundType(vector<unique_ptr<Employee>>& emps, const string keyword) {
 	vector<Employee> newEmployee;
-	
-	for (auto& employee : emps) {	
+
+	for (auto& employee : emps) {
 		if (keyword == employee->getType()) {
 			newEmployee.push_back(*employee);
 		}
