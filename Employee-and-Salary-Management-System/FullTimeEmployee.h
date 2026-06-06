@@ -10,13 +10,13 @@ public:
 		double newBonus;
 		// 根據業績表現計算獎金
 		if (performance >= 8) {
-			newBonus = getBaseSalary() * 0.2;
+			newBonus = getBaseSalary() * 0.3;
 		}
 		else if (performance >= 6) {
-			newBonus = getBaseSalary() * 0.1;
+			newBonus = getBaseSalary() * 0.2;
 		}
 		else if (performance >= 3) {
-			newBonus = getBaseSalary() * 0.05;
+			newBonus = getBaseSalary() * 0.1;
 		}
 		else {
 			newBonus = 0.0;
