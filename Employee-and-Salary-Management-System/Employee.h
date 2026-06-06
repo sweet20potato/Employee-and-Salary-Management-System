@@ -4,7 +4,6 @@
 #include "Attendance.h"
 #include <string>
 using namespace std;
-
 class Employee
 {
 protected:
@@ -16,7 +15,7 @@ protected:
 	double bonus;
 
 	static int numOfEmployee;
-
+	
 public:
 	Employee();
 	Employee(string, string, string, double, Attendance, double);
