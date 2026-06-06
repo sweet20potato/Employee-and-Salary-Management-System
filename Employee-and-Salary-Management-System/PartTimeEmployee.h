@@ -7,7 +7,7 @@ public:
 	PartTimeEmployee(string id, string name, double baseSalary, Attendance attend, double bonus) :Employee(id, name, "part", baseSalary, attend, bonus) {}
 
 	void setBonus(double performance) override {
-
+		
 	}
 };
 
