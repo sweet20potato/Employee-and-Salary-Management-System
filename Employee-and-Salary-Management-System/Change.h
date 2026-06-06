@@ -8,6 +8,7 @@
 #include "FullTimeEmployee.h"
 #include "PartTimeEmployee.h"
 #include "Attendance.h"
+
 class Change {
 public:
 	void modifyEmployee(Employee&);
