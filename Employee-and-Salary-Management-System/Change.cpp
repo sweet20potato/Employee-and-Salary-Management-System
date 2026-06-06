@@ -114,10 +114,10 @@ void Change::addEmployee(vector<unique_ptr<Employee>>& employees) {
 	cin.ignore();
 	// 出勤狀況預設為 0/0/0
 	if (type == "full") {
-		employees.push_back(make_unique<FullTimeEmployee>(id, name, baseSalary, Attendance(0, 0, 0)));
+		employees.push_back(make_unique<FullTimeEmployee>(id, name, baseSalary, Attendance(0, 0, 0),0));
 	}
 	else {
-		employees.push_back(make_unique<PartTimeEmployee>(id, name, baseSalary, Attendance(0, 0, 0)));
+		employees.push_back(make_unique<PartTimeEmployee>(id, name, baseSalary, Attendance(0, 0, 0),0));
 	}
 
 	cout << "Employee added successfully. ID = " << id << endl;
