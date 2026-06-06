@@ -10,8 +10,8 @@ Employee::Employee() : baseSalary(0), bonus(0.0) {
     numOfEmployee++;
 }
 
-Employee::Employee(string id, string name, string type, double baseSalary, Attendance attend)
-    : id(id), name(name), type(type), baseSalary(baseSalary), attend(attend), bonus(0.0) {
+Employee::Employee(string id, string name, string type, double baseSalary, Attendance attend, double bonus)
+    : id(id), name(name), type(type), baseSalary(baseSalary), attend(attend), bonus(bonus) {
     numOfEmployee++;
 }
 
@@ -29,14 +29,11 @@ void Employee::setAttendance(int personalLeave, int sickLeave, int lateHour) {
     attend.setLateHour(lateHour);
 }
 
-void Employee::setBonus(double bonus) { this->bonus = bonus; }
-
 string Employee::getID() const { return id; }
 string Employee::getName() const { return name; }
 string Employee::getType() const { return type; }
 double Employee::getBaseSalary() const { return baseSalary; }
 Attendance Employee::getAttendance() const { return attend; }
-
 double Employee::getBonus() const { return bonus; }
 
 double Employee::getFinalSalary() const {
@@ -45,13 +42,13 @@ double Employee::getFinalSalary() const {
 
 void Employee::print() {
     cout << left << setw(8) << getID()
-         << setw(16) << getName()
-         << setw(8) << getType()
-         << setw(12) << getBaseSalary()
-         << setw(20) << getAttendance().print()
-         << setw(8) << getBonus()
-         << setw(12) << getFinalSalary()
-         << endl;
+        << setw(16) << getName()
+        << setw(8) << getType()
+        << setw(12) << getBaseSalary()
+        << setw(20) << getAttendance().print()
+        << setw(8) << getBonus()
+        << setw(12) << getFinalSalary()
+        << endl;
 }
 
 int Employee::getNumOfEmployee() { return numOfEmployee; }
