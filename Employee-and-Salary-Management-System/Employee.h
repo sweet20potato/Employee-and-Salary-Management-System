@@ -4,6 +4,7 @@
 #include "Attendance.h"
 #include <string>
 using namespace std;
+
 class Employee
 {
 protected:
@@ -15,9 +16,10 @@ protected:
 	double bonus;
 
 	static int numOfEmployee;
+
 public:
 	Employee();
-	Employee(string, string, string, double, Attendance);
+	Employee(string, string, string, double, Attendance, double);
 	virtual ~Employee();
 
 	void setID(string);
@@ -32,8 +34,8 @@ public:
 	double getBaseSalary() const;
 	Attendance getAttendance() const;
 
-	virtual double getBonus() const;
-	void setBonus(double bonus);
+	double getBonus() const;
+	virtual void setBonus(double);
 	double getFinalSalary() const;
 
 	void print();
