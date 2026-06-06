@@ -10,70 +10,36 @@ Read::Read(const string& filename) :filename(filename) {}
 
 // 從CSV檔案讀取員工資料
 void Read::loadData() {
-    ifstream file(filename);
-	if (!file.is_open()) {
-		cerr << "Failed to open file: " << filename << endl;
-		return;
-	}
-	// === 處理 UTF-8 BOM 亂碼關鍵程式碼 ===
-	unsigned char bom[3] = { 0 };
-	file.read((char*)bom, 3);
-	if (bom[0] == 0xEF && bom[1] == 0xBB && bom[2] == 0xBF) {
-		// 如果前三個位元組是 BOM，指標留在這裡（已經跳過 3 位元組）
-	}
-	else {
-		// 如果不是 BOM，把檔案指標移回最開頭
-		file.clear();
-		file.seekg(0, ios::beg);
-	}
-
+	ifstream file(filename);
+	
 	string line;
-	size_t lineNo = 0;
+	getline(file, line);
 	while (getline(file, line)) {
-		++lineNo;
 		stringstream ss(line);
-		
-		string id, name, type, attend, baseSalary;
+
+		string id, name, type, attendStr, baseSalaryStr, bonusStr;
 
 		getline(ss, id, ',');
 		getline(ss, name, ',');
 		getline(ss, type, ',');
+		getline(ss, baseSalaryStr, ',');
+		getline(ss, attendStr, ',');
+		getline(ss, bonusStr, ',');
 
-		// 讀取並解析基本薪資，處理可能的格式問題
-		double parsedSalary = 0.0;
-		if (getline(ss, baseSalary, ',')) {
-			// 去除基本薪資字串前後的空白和控制字元
-			auto first = baseSalary.find_first_not_of(" \t\r\n");
-			if (first != string::npos) {
-				auto last = baseSalary.find_last_not_of("\t\r\n");
-				string trimmed = baseSalary.substr(first, last - first + 1);
-				try {
-					parsedSalary = stod(trimmed);
-				} catch (const invalid_argument&) {
-					cerr << "Warning: invalid baseSalary on line " << lineNo << ": '" << trimmed << "'. Using 0." << endl;
-				} catch (const out_of_range&) {
-					cerr << "Warning: baseSalary out of range on line " << lineNo << ": '" << trimmed << "'. Using 0." << endl;
-				}
-			}
-		}
+		double parsedSalary = stod(baseSalaryStr);
+		double parsedBonus = stod(bonusStr);
 
-		// 讀取並解析出勤資料 (格式預期: personal/sick/late)
 		int p = 0, s = 0, l = 0;
-		if (getline(ss, attend, ',')) {
-			if (!attend.empty()) {
-				replace(attend.begin(), attend.end(), '/', ' ');
-				stringstream as(attend);
-				as >> p >> s >> l;
-			}
-		}
-
+		char slash;
+		stringstream as(attendStr);
+		as >> p >> slash >> s >> slash >> l;
 		Attendance actualAttend(p, s, l);
 
 		if (type == "full") {
-			employees.push_back(make_unique < FullTimeEmployee>(id, name, parsedSalary, actualAttend));
+			employees.push_back(make_unique < FullTimeEmployee>(id, name, parsedSalary, actualAttend, parsedBonus));
 		}
 		else {
-			employees.push_back(make_unique<PartTimeEmployee>(id, name, parsedSalary, actualAttend));
+			employees.push_back(make_unique<PartTimeEmployee>(id, name, parsedSalary, actualAttend, parsedBonus));
 		}
 	}
 }
@@ -98,17 +64,18 @@ void Read::printReport() {
 // 將員工資料寫回CSV檔案
 void Read::saveData() {
 	ofstream file(filename);
+	file << "id,name,type,baseSalary,attendance,bonus\n";
 	for (auto& emp : employees) {
 		file << emp->getID()
-			 << "," << emp->getName()
-			 << "," << emp->getType() 
-			 << "," << emp->getBaseSalary()
-			 << "," << emp->getAttendance().getPersonalLeave() << "/"
-			 << emp->getAttendance().getSickLeave() << "/"
-			 << emp->getAttendance().getLateHour()
-			 << "," << emp->getBonus()
-			 << "," << emp->getFinalSalary()
-			 << endl;
+			<< "," << emp->getName()
+			<< "," << emp->getType()
+			<< "," << emp->getBaseSalary()
+			<< "," << emp->getAttendance().getPersonalLeave() << "/"
+			<< emp->getAttendance().getSickLeave() << "/"
+			<< emp->getAttendance().getLateHour()
+			<< "," << emp->getBonus()
+			<< "," << emp->getFinalSalary()
+			<< "\n";
 	}
 }
 
