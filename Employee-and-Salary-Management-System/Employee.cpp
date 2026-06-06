@@ -28,6 +28,7 @@ void Employee::setAttendance(int personalLeave, int sickLeave, int lateHour) {
     attend.setSickLeave(sickLeave);
     attend.setLateHour(lateHour);
 }
+void Employee::setBonus(double bonus) { this->bonus = bonus; }
 
 string Employee::getID() const { return id; }
 string Employee::getName() const { return name; }
