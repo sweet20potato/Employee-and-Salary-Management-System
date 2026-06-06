@@ -4,10 +4,10 @@
 #include "Employee.h"
 class PartTimeEmployee :public Employee {
 public:
-	PartTimeEmployee(string id,string name,double baseSalary,Attendance attend):Employee(id,name,"part",baseSalary,attend){}
+	PartTimeEmployee(string id, string name, double baseSalary, Attendance attend, double bonus) :Employee(id, name, "part", baseSalary, attend, bonus) {}
 
-	double getBonus() const override {
-		return bonus;
+	void setBonus(double performance) override {
+
 	}
 };
 
