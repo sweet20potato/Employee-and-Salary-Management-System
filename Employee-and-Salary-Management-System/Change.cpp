@@ -67,21 +67,8 @@ void Change::modifyEmployee(Employee& emp) {
 			double performance;
 			cin >> performance;
 			cin.ignore(); //吃掉殘留的換行=>防止初始cout兩次
-			double bonus = 0.0;
-			// 根據業績表現計算獎金
-			if (performance >= 8) {
-				bonus = emp.getBaseSalary() * 0.2;
-			}
-			else if (performance >= 6) {
-				bonus = emp.getBaseSalary() * 0.1;
-			}
-			else if (performance >= 3) {
-				bonus = emp.getBaseSalary() * 0.05;
-			}
-			else {
-				bonus = 0.0; 
-			}
-			emp.setBonus(bonus);
+			
+			emp.setBonus(performance);
 		}
 	}
 	cout << "The employee's information has been changed as follows: ";
