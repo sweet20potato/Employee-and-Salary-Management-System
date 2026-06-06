@@ -78,7 +78,7 @@ int main() {
 				}
 				else if (ans == 'n') {
 					cout << "The employee's information remains unchanged." << endl;
-					break;
+					continue;
 				}
 			}
 		}
