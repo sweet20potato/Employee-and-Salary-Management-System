@@ -87,3 +87,5 @@
 
 > [!IMPORTANT]
 > 結束應用前請務必輸入"end"結束程式，否則將會無法儲存更變至csv。
+
+詳細操作說明，可參考解說影片 [影片連結](<https://youtu.be/PlmCNfUzspc>)
