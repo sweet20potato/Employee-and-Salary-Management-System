@@ -21,10 +21,16 @@
 #
 > [!TIP]
 > ### 系統安裝 & 執行：
-> 下載本專案資料夾 [Employee-and-Salary-Management-System](<https://github.com/sweet20potato/Employee-and-Salary-Management-System/tree/7d517fa240225ec85bb5db82eca42fe38283de06/Employee-and-Salary-Management-System>) 中的所有檔案，放到同一資料夾，並於任一可執行C++語言之編譯器編譯並執行。
-> 
-> 或者，直接下載 [Employee-and-Salary-Management-System.zip](<https://github.com/sweet20potato/Employee-and-Salary-Management-System/blob/18af7c16e4c477c7b1b08df503ff98f393b6da1c/Employee-and-Salary-Management-System.zip>)，解壓縮後，於任一可執行C++語言之編譯器編譯並執行即可。
-#
+> 1. 點選分支
+> 2. 選擇下載專用分支"Download"
+>
+>    ![下載畫面1](<photo/152715.png>)
+> 4. 點選"Code"
+> 5. 選擇"Download ZIP"
+>
+>    ![下載畫面2](<photo/153236.png>)
+> 7. 解壓縮後於任一可執行C++之編譯器，編譯並執行即可
+
 ### 系統運行：
 1. 系統顯示當前員工資訊及財務報表，並詢問要執行什麼功能
 2. 輸入想要執行功能後，依照提示，搜尋要的更動的員工及員工資訊
